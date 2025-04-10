@@ -1,5 +1,7 @@
 package org.example.dto;
 
 public class Cuenta {
-    protected double saldo; 
+    public int id;
+    protected double saldo;
+    public int cantOperaciones;
 }
