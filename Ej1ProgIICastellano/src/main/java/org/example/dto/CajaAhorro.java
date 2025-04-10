@@ -9,6 +9,7 @@ public class CajaAhorro extends Cuenta implements IGestionSaldo{
         Resultado resultado= new Resultado();
         resultado.setMessage(mensaje);
         resultado.setSucesso(sucesso);
+        cantOperaciones++;
         return resultado;
     }
 
@@ -20,6 +21,7 @@ public class CajaAhorro extends Cuenta implements IGestionSaldo{
             resultado.setMessage("no alcanza para retirar, el saldo es menor");
             return  resultado;
         }
+        cantOperaciones++;
         saldo=-monto;
         resultado.setMessage("saldo quitado con exito");
         resultado.setSucesso(true);

@@ -7,18 +7,19 @@ public class CuentaCorriente extends Cuenta implements IGestionSaldo {
         this.montoGiro= monto;
     }
     @Override
-    public Resultado agregarSaldo(double monto) {
+    public synchronized Resultado agregarSaldo(double monto) {
         saldo+=monto;
         boolean sucesso= true;
         String mensaje= "Se agrego con exito";
         Resultado resultado= new Resultado();
         resultado.setMessage(mensaje);
         resultado.setSucesso(sucesso);
+        cantOperaciones++;
         return resultado;
     }
 
     @Override
-    public Resultado quitarSaldo(double monto) {
+    public synchronized Resultado quitarSaldo(double monto) {
         Resultado resultado= new Resultado();
         double saldoDisponible= saldo+montoGiro;
         if(saldoDisponible<monto){
@@ -26,19 +27,20 @@ public class CuentaCorriente extends Cuenta implements IGestionSaldo {
             resultado.setMessage("no alcanza para retirar, el saldo incluido el giro descubierto es menor");
             return  resultado;
         }
+        cantOperaciones++;
         saldo+=monto;
         resultado.setMessage("se quito con exito");
         resultado.setSucesso(true);
-        return resultado; 
+        return resultado;
     }
 
     @Override
     public double getSaldo() {
-        return 0;
+        return saldo;
     }
 
     @Override
     public int getOperaciones() {
-        return 0;
+        return cantOperaciones;
     }
 }
