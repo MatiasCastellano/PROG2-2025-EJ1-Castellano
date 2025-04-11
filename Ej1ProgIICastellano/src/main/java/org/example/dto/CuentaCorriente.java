@@ -3,7 +3,8 @@ package org.example.dto;
 public class CuentaCorriente extends Cuenta implements IGestionSaldo {
     public double montoGiro;
 
-    public void setMontoGiro(double monto){
+    public CuentaCorriente(int cod,double monto){
+        this.id=cod;
         this.montoGiro= monto;
     }
     @Override
@@ -28,7 +29,7 @@ public class CuentaCorriente extends Cuenta implements IGestionSaldo {
             return  resultado;
         }
         cantOperaciones++;
-        saldo+=monto;
+        saldo-=monto;
         resultado.setMessage("se quito con exito");
         resultado.setSucesso(true);
         return resultado;

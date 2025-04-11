@@ -1,6 +1,10 @@
 package org.example.dto;
 
 public class CajaAhorro extends Cuenta implements IGestionSaldo{
+
+    public CajaAhorro(int cod){
+        this.id=cod;
+    }
     @Override
     public Resultado agregarSaldo(double monto) {
         saldo+=monto;
