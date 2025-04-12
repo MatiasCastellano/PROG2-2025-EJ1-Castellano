@@ -6,10 +6,11 @@ import org.example.dto.*;
 
 public class LogicaCuenta {
     private static LogicaCuenta instancia;
-    private List<Cuenta> cuentas;
+    public List<Cuenta> cuentas;
     private LogicaCuenta(){
         cuentas= new ArrayList<>();
     }
+
     public static LogicaCuenta getInstance(){
         if (instancia==null){
             instancia= new LogicaCuenta();
@@ -62,15 +63,8 @@ public class LogicaCuenta {
 
     private Cuenta buscarCuenta(int cod){
         for(int i=0; i<cuentas.size();i++){
-            Cuenta cuenta1= new Cuenta();
-            if (cuenta1.id==cod){
-             if (cuenta1 instanceof CajaAhorro){
-                 CajaAhorro ahorro= (CajaAhorro) cuenta1;
-                 return ahorro;
-             }else{
-                 CuentaCorriente corriente= (CuentaCorriente) cuenta1;
-                return corriente;
-             }
+            if (cuentas.get(i).id==cod){
+                return cuentas.get(i);
             }
         }
         return null;

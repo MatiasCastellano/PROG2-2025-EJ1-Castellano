@@ -7,8 +7,7 @@ public class CajaAhorroBuilder implements Builder{
         this.id=id;
     }
 
-    @Override
-    public Cuenta builder() {
+    public CajaAhorro getResult(){
         return new CajaAhorro(id);
     }
 }

@@ -11,8 +11,7 @@ public class CuentaCorrienteBuilder implements Builder{
         this.montoGiroDescubierto=monto;
     }
 
-    @Override
-    public Cuenta builder() {
+    public CuentaCorriente getResult(){
         return new CuentaCorriente(id,montoGiroDescubierto);
     }
 }

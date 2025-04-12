@@ -6,7 +6,7 @@ public class CajaAhorro extends Cuenta implements IGestionSaldo{
         this.id=cod;
     }
     @Override
-    public Resultado agregarSaldo(double monto) {
+    public synchronized Resultado agregarSaldo(double monto) {
         saldo+=monto;
         boolean sucesso= true;
         String mensaje= "Se agrego con exito";
@@ -18,7 +18,7 @@ public class CajaAhorro extends Cuenta implements IGestionSaldo{
     }
 
     @Override
-    public Resultado quitarSaldo(double monto) {
+    public synchronized Resultado quitarSaldo(double monto) {
         Resultado resultado= new Resultado();
         if(saldo<monto){
             resultado.setSucesso(false);
