@@ -12,53 +12,64 @@ public class LogicaCuentaTEST {
     @BeforeEach
     public void setUp(){
         service= LogicaCuenta.getInstance();
+        service.limpiarCuentas();
+        service.agregarCuenta(new CajaAhorro(1));
+        service.agregarCuenta(new CuentaCorriente(2,1500));
+
     }
     @Test
-    public void AgregarSaldoOk(){
-        service.agregarCuenta(new CajaAhorro(1));
-        Resultado resultado= new Resultado();
-        resultado= service.agregarSaldo(1,1500);
+    public void AgregarSaldoCajaAhorroOk(){
+        Resultado resultado= service.agregarSaldo(1,1500);
         assertTrue(resultado.sucesso);
     }
     @Test
     public void AgregarSaldoCuentaInexistente(){
-        service.agregarCuenta(new CajaAhorro(1));
-        Resultado resultado= new Resultado();
-        resultado= service.agregarSaldo(12,1500);
+        Resultado resultado= service.agregarSaldo(12,1500);
         assertFalse(resultado.sucesso);
     }
     @Test
-    public void ConsultarSaldoOk(){
-
-        service.agregarCuenta(new CajaAhorro(1));
-        Resultado resultado= new Resultado();
-        resultado= service.agregarSaldo(1,3000);
+    public void ConsultarSaldoCajaAhorroOk(){
+        Resultado resultado= service.agregarSaldo(1,3000);
         double saldo= service.consultarSaldo(1);
         assertEquals(saldo,3000);
     }
     @Test
-    public void QuitarSaldoOk(){
-
-        service.agregarCuenta(new CajaAhorro(1));
-        Resultado resultado= new Resultado();
+    public void QuitarSaldoCajaAhorroOk(){
         service.agregarSaldo(1,3000);
-        resultado= service.quitarSaldo(1,2000);
+        Resultado resultado= service.quitarSaldo(1,2000);
+        assertTrue(resultado.sucesso);
+    }
+    @Test
+    public void CantOperacionesCajaAhorroOk(){
+        service.agregarSaldo(1,200);
+        int cant= service.cuentas.get(0).cantOperaciones;
+        assertEquals(cant,1);
+    }
+    @Test
+    public void AgregarSaldoCuentaCorrienteOk(){
+        Resultado resultado= service.agregarSaldo(2,3000);
         assertTrue(resultado.sucesso);
     }
     @Test
     public void QuitarSaldoCuentaNoEncontradaOk(){
-        service.agregarCuenta(new CajaAhorro(1));
-        Resultado resultado= new Resultado();
-        service.agregarSaldo(1,3000);
-        resultado= service.quitarSaldo(100,2000);
+        service.agregarSaldo(2,3000);
+        Resultado resultado= service.quitarSaldo(100,2000);
         assertFalse(resultado.sucesso);
+    }
+    @Test
+    public void QuitarSaldoCuentaCorrienteOk(){
+        Resultado resultado= service.quitarSaldo(2,1000);
+        assertTrue(resultado.sucesso);
     }
 
     @Test
-    public void QuitarSaldoNoPosibleOk(){
-
-        service.agregarCuenta(new CuentaCorriente(1,2000));
+    public void QuitarSaldoCajaAhorroNoPosibleOk(){
         Resultado resultado= service.quitarSaldo(1,5000);
+        assertFalse(resultado.sucesso);
+    }
+    @Test
+    public void QuitarSaldoCuentaCorrienteNoPosibleOk(){
+        Resultado resultado= service.quitarSaldo(2,150000);
         assertFalse(resultado.sucesso);
     }
 

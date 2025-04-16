@@ -73,4 +73,7 @@ public class LogicaCuenta {
         cuentas.add(cuentaNueva);
     }
 
+    public void limpiarCuentas(){
+        cuentas.clear();
+    }
 }
