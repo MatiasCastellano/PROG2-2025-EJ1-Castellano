@@ -2,6 +2,7 @@ import org.example.dto.CajaAhorro;
 import org.example.dto.CuentaCorriente;
 import org.example.dto.Resultado;
 import org.example.service.LogicaCuenta;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,10 @@ public class LogicaCuentaTEST {
         service.agregarCuenta(new CuentaCorriente(2,1500));
 
     }
+    @AfterEach
+    void teadDown(){
+        service.limpiarCuentas();
+    }
     @Test
     public void AgregarSaldoCajaAhorroOk(){
         Resultado resultado= service.agregarSaldo(1,1500);
@@ -29,15 +34,25 @@ public class LogicaCuentaTEST {
     }
     @Test
     public void ConsultarSaldoCajaAhorroOk(){
-        Resultado resultado= service.agregarSaldo(1,3000);
         double saldo= service.consultarSaldo(1);
-        assertEquals(saldo,3000);
+        assertEquals(saldo,0);
+    }
+    @Test
+    public void AgregarCuentaOk(){
+        service.agregarCuenta(new CuentaCorriente(3,1000));
+        assertEquals(3,service.cuentas.stream().count());
     }
     @Test
     public void QuitarSaldoCajaAhorroOk(){
         service.agregarSaldo(1,3000);
         Resultado resultado= service.quitarSaldo(1,2000);
         assertTrue(resultado.sucesso);
+        assertEquals(2,service.cuentas.get(0).cantOperaciones);
+    }
+    @Test
+    public void limpiarCuentasOk(){
+        service.limpiarCuentas();
+        assertEquals(0, service.cuentas.stream().count());
     }
     @Test
     public void CantOperacionesCajaAhorroOk(){
